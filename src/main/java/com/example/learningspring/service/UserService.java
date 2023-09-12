@@ -51,10 +51,14 @@ public class UserService {
     }
 
     public User updateUser(final UserDto userData, final long id) {
-        checkEmailAndCpf(userData);
-
         final User foundUser = userRepository.findById(id)
                 .orElseThrow(() -> new AppException("User not found!", HttpStatus.NOT_FOUND));
+
+        if (userData.getEmail() != foundUser.getEmail()) {
+            checkEmailAndCpf(userData);
+        } else if (userData.getCpf() != foundUser.getCpf()) {
+            checkEmailAndCpf(userData);
+        }
 
         foundUser.setName(userData.getName());
         foundUser.setEmail(userData.getEmail());
