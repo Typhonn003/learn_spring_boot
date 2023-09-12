@@ -54,9 +54,9 @@ public class UserService {
         final User foundUser = userRepository.findById(id)
                 .orElseThrow(() -> new AppException("User not found!", HttpStatus.NOT_FOUND));
 
-        if (userData.getEmail() != foundUser.getEmail()) {
+        if (userData.getEmail().equals(foundUser.getEmail())) {
             checkEmailAndCpf(userData);
-        } else if (userData.getCpf() != foundUser.getCpf()) {
+        } else if (userData.getCpf().equals(foundUser.getCpf())) {
             checkEmailAndCpf(userData);
         }
 
